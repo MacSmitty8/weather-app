@@ -1,8 +1,15 @@
 import React from 'react'
 import './weather.css'
 import { useState } from 'react'
+import DisplayWeather from './DisplayWeather';
 
 function Weather() {
+
+    const [form, setForm] = useState({
+        city: '',
+        country: ''
+    });
+    const [weather, setWeather] = useState([])
 
     const APIKEY = "5f43536296f501fa7505245bb781e4b7"
     //FETCHING WEATHER DATA
@@ -13,17 +20,14 @@ function Weather() {
         if(form.city == ""){
             alert("Add Values")
         } else {
-            const data = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&appid=${APIKEY}`) 
-            const res = await data.json()
-            console.log(res);
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&appid=${APIKEY}`) 
+            const data = await res.json()
+            setWeather({data : data})
         }
     }
     
     
-    const [form, setForm] = useState({
-        city: '',
-        country: ''
-    })
+    
 
     const handleChange = (e) => {
         let name = e.target.name
@@ -54,6 +58,14 @@ function Weather() {
         <input type="text" name="country" placeholder="country" onChange={handleChange}/>
         <button className="getWeather" onClick={weatherData}>Submit</button>
       </form>
+
+      {
+        weather.data !== undefined ? (
+        <div> 
+        <DisplayWeather  date={weather.data}/>
+        </div>
+         ) : null
+      }
     </div>
   )
 }
