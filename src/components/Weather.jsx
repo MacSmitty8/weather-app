@@ -8,13 +8,14 @@ function Weather() {
     //FETCHING WEATHER DATA
 
     async function weatherData(e) {
-    e.preventDefault();
+    e.preventDefault()
         //checking if the input has a value
         if(form.city == ""){
             alert("Add Values")
         } else {
             const data = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${form.city},${form.country}&appid=${APIKEY}`) 
-            const res = await res.json()
+            const res = await data.json()
+            console.log(res);
         }
     }
     
@@ -34,7 +35,7 @@ function Weather() {
                 city: value
             });
         }
-        if(namme == "country"){
+        if(name == "country"){
             setForm({
                 ...form,
                 country: value
@@ -42,7 +43,7 @@ function Weather() {
         }
         
     };
-    console.log(form.city, form.country)
+    // console.log(form.city, form.country)
   return (
     <div className="weather">
       <span className="title"> Weather App </span>
